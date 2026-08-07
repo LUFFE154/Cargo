@@ -1,0 +1,109 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      CARGO_APP_NAME: Cargo
+      CARGO_ENVIRONMENT: development
+      CARGO_API_PREFIX: /api/v1
+      CARGO_DATA_DIR: /app/data
+      CARGO_UPLOADS_DIR: /app/data/uploads
+      CARGO_TEMP_DIR: /app/data/tmp
+      CARGO_DATABASE_URL: postgresql+psycopg://cargo:cargo@db:5432/cargo
+      CARGO_REDIS_URL: redis://redis:6379/0
+      CARGO_LOG_LEVEL: INFO
+      CARGO_TRANSFER_CODE_TTL_SECONDS: 900
+      CARGO_CLEANUP_INTERVAL_SECONDS: 300
+      CARGO_MAX_UPLOAD_SIZE_MB: 10240
+    ports:
+      - "8000:8000"
+    volumes:
+      - cargo-data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["celery", "-A", "app.infrastructure.tasks.celery_app.celery_app", "worker", "--loglevel=info"]
+    environment:
+      CARGO_APP_NAME: Cargo
+      CARGO_ENVIRONMENT: development
+      CARGO_API_PREFIX: /api/v1
+      CARGO_DATA_DIR: /app/data
+      CARGO_UPLOADS_DIR: /app/data/uploads
+      CARGO_TEMP_DIR: /app/data/tmp
+      CARGO_DATABASE_URL: postgresql+psycopg://cargo:cargo@db:5432/cargo
+      CARGO_REDIS_URL: redis://redis:6379/0
+      CARGO_LOG_LEVEL: INFO
+      CARGO_TRANSFER_CODE_TTL_SECONDS: 900
+      CARGO_CLEANUP_INTERVAL_SECONDS: 300
+      CARGO_MAX_UPLOAD_SIZE_MB: 10240
+    volumes:
+      - cargo-data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["celery", "-A", "app.infrastructure.tasks.celery_app.celery_app", "beat", "--loglevel=info"]
+    environment:
+      CARGO_APP_NAME: Cargo
+      CARGO_ENVIRONMENT: development
+      CARGO_API_PREFIX: /api/v1
+      CARGO_DATA_DIR: /app/data
+      CARGO_UPLOADS_DIR: /app/data/uploads
+      CARGO_TEMP_DIR: /app/data/tmp
+      CARGO_DATABASE_URL: postgresql+psycopg://cargo:cargo@db:5432/cargo
+      CARGO_REDIS_URL: redis://redis:6379/0
+      CARGO_LOG_LEVEL: INFO
+      CARGO_TRANSFER_CODE_TTL_SECONDS: 900
+      CARGO_CLEANUP_INTERVAL_SECONDS: 300
+      CARGO_MAX_UPLOAD_SIZE_MB: 10240
+    volumes:
+      - cargo-data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: cargo
+      POSTGRES_USER: cargo
+      POSTGRES_PASSWORD: cargo
+    ports:
+      - "5432:5432"
+    volumes:
+      - cargo-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cargo -d cargo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  cargo-data:
+  cargo-postgres:
