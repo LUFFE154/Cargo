@@ -164,4 +164,8 @@ If you want to help, the best starting point is to open an issue or discussion d
 
 ## License
 
-MIT LICENSING.
+MIT License.
+
+## Author
+Luiz Fernando Pio Ferreira
+luffe533@gmail.com
