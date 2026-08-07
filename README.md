@@ -23,6 +23,7 @@ Cargo is a good fit for offices, classrooms, homes, labs, and any environment wh
 - Search and folder organization for uploaded files.
 - REST API first, with a polished browser interface built on top.
 - Docker Compose-based deployment for local self-hosting.
+- Chunked uploads for reliable large file transfers.
 
  ## Security
 
