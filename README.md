@@ -23,6 +23,15 @@ Cargo is a good fit for offices, classrooms, homes, labs, and any environment wh
 - Search and folder organization for uploaded files.
 - REST API first, with a polished browser interface built on top.
 - Docker Compose-based deployment for local self-hosting.
+- Chunked uploads for reliable large file transfers.
+
+ ## Security
+
+- JWT authentication.
+- Expiring transfer codes.
+- Metadata separated from file storage.
+- No cloud dependency.
+- Local network only by default.
 
 ## Tech Stack
 
@@ -156,4 +165,8 @@ If you want to help, the best starting point is to open an issue or discussion d
 
 ## License
 
-MIT LICENSING.
+MIT License.
+
+## Author
+Luiz Fernando Pio Ferreira
+luffe533@gmail.com
