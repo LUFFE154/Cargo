@@ -24,6 +24,14 @@ Cargo is a good fit for offices, classrooms, homes, labs, and any environment wh
 - REST API first, with a polished browser interface built on top.
 - Docker Compose-based deployment for local self-hosting.
 
+ ## Security
+
+- JWT authentication.
+- Expiring transfer codes.
+- Metadata separated from file storage.
+- No cloud dependency.
+- Local network only by default.
+
 ## Tech Stack
 
 - Python 3.13
