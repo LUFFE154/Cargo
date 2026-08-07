@@ -14,6 +14,7 @@ from app.application.transfers_service import TransferService
 from app.domain.auth import AuthenticatedUser
 from app.domain.uploads import UploadSession, UploadSessionStatus
 from app.domain.repositories import UnitOfWork
+from app.infrastructure.storage import local
 
 
 @dataclass(slots=True)
@@ -133,12 +134,20 @@ class ChunkedUploadService:
     async def _append_to_temp_file(self, temp_path: Path, chunk) -> int:
         temp_path.parent.mkdir(parents=True, exist_ok=True)
         size_written = 0
-        while True:
-            data = await chunk.read(1024 * 1024)
-            if not data:
-                break
-            await anyio.to_thread.run_sync(self._append_bytes, temp_path, data)
-            size_written += len(data)
+        ##Stops opening and closing the file for each chunk, instead opens it once and writes all chunks to it. Saving time and resources.
+        def write_chunks():
+            nonlocal size_written
+
+            with temp_path.open("ab") as target:
+                while True:
+                    data = chunk.file.read(4 * 1024 * 1024)  # Read in 4MB chunks
+                    if not data:
+                        break
+                    target.write(data)
+                    size_written += len(data)
+        write_chunks()
+        await anyio.to_thread.run_sync(write_chunks)
+
         return size_written
 
     async def _finalize_temp_file(self, temp_path: Path, original_name: str) -> Path:
@@ -148,6 +157,8 @@ class ChunkedUploadService:
 
     async def _checksum(self, file_path: Path) -> str:
         return await anyio.to_thread.run_sync(self._checksum_sync, file_path)
+
+    
 
     def _append_bytes(self, temp_path: Path, data: bytes) -> None:
         with temp_path.open("ab") as target:

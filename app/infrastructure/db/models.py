@@ -3,7 +3,7 @@ from __future__ import annotations
 from datetime import datetime
 from uuid import UUID, uuid4
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint, func
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, BigInteger, UniqueConstraint, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.domain.transfers import TransferStatus
@@ -49,7 +49,7 @@ class TransferModel(TimestampMixin, Base):
     original_name: Mapped[str] = mapped_column(String(512), nullable=False)
     stored_name: Mapped[str] = mapped_column(String(512), nullable=False)
     storage_path: Mapped[str] = mapped_column(String(1024), nullable=False)
-    size_bytes: Mapped[int] = mapped_column(Integer, nullable=False)
+    size_bytes: Mapped[int] = mapped_column(BigInteger, nullable=False)
     checksum_sha256: Mapped[str | None] = mapped_column(String(64), nullable=True)
     transfer_code: Mapped[str | None] = mapped_column(String(32), index=True, nullable=True)
     status: Mapped[str] = mapped_column(String(32), default=TransferStatus.UPLOADING.value, nullable=False)

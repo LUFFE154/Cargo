@@ -46,7 +46,7 @@ class Settings(BaseModel):
             log_level=os.getenv("CARGO_LOG_LEVEL", "INFO"),
             transfer_code_ttl_seconds=int(os.getenv("CARGO_TRANSFER_CODE_TTL_SECONDS", "900")),
             cleanup_interval_seconds=int(os.getenv("CARGO_CLEANUP_INTERVAL_SECONDS", "300")),
-            max_upload_size_mb=int(os.getenv("CARGO_MAX_UPLOAD_SIZE_MB", "10240")),
+            max_upload_size_mb=int(os.getenv("CARGO_MAX_UPLOAD_SIZE_MB", "0")),
             allowed_origins=_csv_to_list(os.getenv("CARGO_ALLOWED_ORIGINS")),
         )
 

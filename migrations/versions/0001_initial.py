@@ -51,7 +51,7 @@ def upgrade() -> None:
         sa.Column("original_name", sa.String(length=512), nullable=False),
         sa.Column("stored_name", sa.String(length=512), nullable=False),
         sa.Column("storage_path", sa.String(length=1024), nullable=False),
-        sa.Column("size_bytes", sa.Integer(), nullable=False),
+        sa.Column("size_bytes", sa.BigInteger(), nullable=False),
         sa.Column("checksum_sha256", sa.String(length=64), nullable=True),
         sa.Column("transfer_code", sa.String(length=32), nullable=True),
         sa.Column("status", sa.String(length=32), nullable=False, server_default="uploading"),

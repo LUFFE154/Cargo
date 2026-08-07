@@ -15,7 +15,7 @@ services:
       CARGO_LOG_LEVEL: INFO
       CARGO_TRANSFER_CODE_TTL_SECONDS: 900
       CARGO_CLEANUP_INTERVAL_SECONDS: 300
-      CARGO_MAX_UPLOAD_SIZE_MB: 10240
+      ##CARGO_MAX_UPLOAD_SIZE_MB: 10240
     ports:
       - "8000:8000"
     volumes:
@@ -43,7 +43,7 @@ services:
       CARGO_LOG_LEVEL: INFO
       CARGO_TRANSFER_CODE_TTL_SECONDS: 900
       CARGO_CLEANUP_INTERVAL_SECONDS: 300
-      CARGO_MAX_UPLOAD_SIZE_MB: 10240
+      ##CARGO_MAX_UPLOAD_SIZE_MB: 10240
     volumes:
       - cargo-data:/app/data
     depends_on:
@@ -69,7 +69,7 @@ services:
       CARGO_LOG_LEVEL: INFO
       CARGO_TRANSFER_CODE_TTL_SECONDS: 900
       CARGO_CLEANUP_INTERVAL_SECONDS: 300
-      CARGO_MAX_UPLOAD_SIZE_MB: 10240
+      ##CARGO_MAX_UPLOAD_SIZE_MB: 10240
     volumes:
       - cargo-data:/app/data
     depends_on:
