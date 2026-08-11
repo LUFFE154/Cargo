@@ -1,5 +1,7 @@
 # Cargo
 
+<img width="1152" height="648" alt="cargo" src="https://github.com/user-attachments/assets/7a519440-9112-44df-b653-366bc83e06af" />
+
 **Fast LAN file transfer for people who would rather not email themselves a 2 GB archive.**
 
 ## Overview
