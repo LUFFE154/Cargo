@@ -9,7 +9,7 @@ from fastapi import Request, Response
 import segno
 
 from app.api.dependencies import get_current_user, get_settings, get_uow
-from app.api.schemas.transfers import TransferDownloadResponse, TransferUploadResponse
+from app.api.schemas.transfers import TransferDownloadResponse, TransferUploadResponse, TransferListItemResponse
 from app.application.exceptions import NotFoundError
 from app.application.transfer_codes import TransferCodeGenerator
 from app.application.transfers_service import TransferService
@@ -17,6 +17,7 @@ from app.application.uow import SQLAlchemyUnitOfWork
 from app.core.settings import Settings
 from app.domain.auth import AuthenticatedUser
 from app.infrastructure.storage.local import LocalFileStorage
+
 
 router = APIRouter(prefix="/transfers", tags=["transfers"])
 
@@ -48,6 +49,28 @@ async def upload_transfer(
         size_bytes=result.size_bytes,
         original_name=result.original_name,
     )
+
+@router.get("/mine", response_model=list[TransferDownloadResponse])
+async def list_my_transfers(
+    current_user: AuthenticatedUser = Depends(get_current_user),
+    transfer_service: TransferService = Depends(get_transfer_service),
+) -> list[TransferDownloadResponse]:
+    transfers = await transfer_service.list_for_owner(
+        owner_id=current_user.user_id,
+    )
+
+    return [
+        TransferDownloadResponse(
+            transfer_id=str(transfer.id),
+            transfer_code=transfer.transfer_code or "",
+            original_name=transfer.original_name,
+            size_bytes=transfer.size_bytes,
+            sha256=transfer.checksum_sha256,
+            status=transfer.status.value,
+            expires_at=transfer.expires_at,
+        )
+        for transfer in transfers
+    ]
 
 
 @router.get("/{transfer_code}", response_model=TransferDownloadResponse)
