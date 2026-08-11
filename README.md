@@ -84,6 +84,19 @@ Cargo reads configuration from `CARGO_*` environment variables. The Docker Compo
 
 ### 3. Start the stack
 
+```text
+start.bat
+```
+
+The script will:
+
+1. Check that Docker is running.
+2. Start the PostgreSQL and Redis containers.
+3. Build the application containers.
+4. Start the complete Cargo stack.
+
+Or in the console:
+
 ```bash
 docker compose up --build
 ```
@@ -111,12 +124,22 @@ Cargo/
 │   ├── infrastructure/
 │   ├── main.py
 │   └── static/
+│
 ├── migrations/
 ├── tests/
+│
 ├── Dockerfile
 ├── docker-compose.yml
 ├── alembic.ini
-└── requirements.txt
+├── requirements.txt
+│
+├── start.bat
+├── dev.bat
+├── stop.bat
+│
+├── .env.example
+├── .gitignore
+└── README.md
 ```
 
 ## Development
@@ -124,6 +147,24 @@ Cargo/
 ### Run locally
 
 If you want to run the application outside Docker, install the dependencies and start Uvicorn against the FastAPI app:
+
+#### 1. Run the development environment
+
+Double-click:
+
+```text
+dev.bat
+```
+
+The script automatically:
+
+- Checks for Python.
+- Creates the `.venv` virtual environment if necessary.
+- Activates the virtual environment.
+- Installs the dependencies from `requirements.txt`.
+- Starts the FastAPI development server.
+
+Or:
 
 ```bash
 python -m pip install -r requirements.txt
