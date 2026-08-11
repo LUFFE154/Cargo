@@ -96,8 +96,9 @@ async def download_transfer(
     )
 
 
-@router.get("/{transfer_code}/qr.svg")
-async def transfer_qr_svg(
+import io
+@router.get("/{transfer_code}/qr.png")
+async def transfer_qr_png(
     transfer_code: str,
     request: Request,
     transfer_service: TransferService = Depends(get_transfer_service),
@@ -105,11 +106,33 @@ async def transfer_qr_svg(
     try:
         transfer = await transfer_service.resolve_transfer(transfer_code)
     except NotFoundError as exc:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(exc)) from exc
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(exc),
+        ) from exc
 
     if transfer.expires_at is not None and transfer.expires_at <= datetime.now(UTC):
-        raise HTTPException(status_code=status.HTTP_410_GONE, detail="Transfer has expired")
+        raise HTTPException(
+            status_code=status.HTTP_410_GONE,
+            detail="Transfer has expired",
+        )
 
-    download_url = str(request.url_for("download_transfer", transfer_code=transfer_code))
-    qr_svg = segno.make(download_url).svg_inline(scale=6, xmldecl=False)
-    return Response(content=qr_svg, media_type="image/svg+xml")
+    download_url = str(
+        request.url_for(
+            "download_transfer",
+            transfer_code=transfer_code,
+        )
+    )
+
+    qr = segno.make(download_url)
+
+    buffer = io.BytesIO()
+    qr.save(buffer, kind="png", scale=6)
+
+    return Response(
+        content=buffer.getvalue(),
+        media_type="image/png",
+        headers={
+            "Cache-Control": "no-store",
+        },
+    )

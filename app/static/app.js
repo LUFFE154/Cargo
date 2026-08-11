@@ -184,7 +184,7 @@ function setupUploadPage() {
       copyButton.disabled = false;
       downloadLink.href = `${API_PREFIX}/transfers/${result.transfer_code}/download`;
       downloadLink.setAttribute('aria-disabled', 'false');
-      qrCodeImage.src = `${API_PREFIX}/transfers/${result.transfer_code}/qr.svg`;
+      qrCodeImage.src = `${API_PREFIX}/transfers/${result.transfer_code}/qr.png`;
       progressBar.style.width = '100%';
       progressText.textContent = '100%';
       toast('Transfer created successfully.');
