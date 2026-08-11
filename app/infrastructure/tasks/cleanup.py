@@ -16,7 +16,7 @@ from app.infrastructure.storage.local import LocalFileStorage
 def cleanup_expired_transfers() -> int:
     settings = get_settings()
     session_factory = get_session_factory(settings.database_url)
-    uow = SQLAlchemyUnitOfWork(session_factory)
+    uow = SQLAlchemyUnitOfWork(session_factory, settings.redis_url)
     file_storage = LocalFileStorage(settings.uploads_dir)
     service = CleanupService(uow=uow, file_storage=file_storage)
     return asyncio.run(service.cleanup_expired_transfers())
