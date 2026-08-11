@@ -37,7 +37,9 @@ def _layout(title: str, page: str, content: str) -> HTMLResponse:
         <header class="topbar">
 
             <a class="brand" href="/">
-                <span class="brand-mark">C</span>
+                <span class="brand-mark">
+                <img src="static/logo.png" alt="Cargo">
+                </span>
                 <span>Cargo</span>
             </a>
 
