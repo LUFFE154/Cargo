@@ -63,7 +63,7 @@ REM ==========================================
 REM 3. Install dependencies
 REM ==========================================
 
-echo [3/4] Verificando dependencias...
+echo [3/4] Verifying dependencies...
 
 call .venv\Scripts\activate.bat
 
