@@ -79,7 +79,7 @@ Cargo follows a clean, layered structure:
 
 ```bash
 git clone https://github.com/LUFFE154/cargo
-cd Cargo
+cd cargo
 ```
 
 ### 2. Configure environment variables
