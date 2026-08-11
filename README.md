@@ -12,14 +12,22 @@ The problem Cargo solves is simple: moving a file from one machine to another sh
 
 Cargo is a good fit for offices, classrooms, homes, labs, and any environment where devices already share a network and the only thing missing is a practical way to share files.
 
+## Why Cargo?
+
+Traditional file sharing often means uploading files to a cloud service, generating a link, and waiting for the upload to complete.
+
+Cargo takes a different approach: when the devices can already reach each other, there is no reason to introduce a third-party storage service.
+
+Cargo keeps the transfer close to the devices that need it.
+
 ## Features
 
 - Fast file transfers over LAN.
 - Web-based upload and download flows.
-- Compatible with free services, such as Tailscale and Radmin
+- Works over LAN, IPv6, and virtual networks such as Tailscale or Radmin VPN.
 - Short transfer codes for quick handoff between devices.
 - QR code output for easy scanning on a second device.
-- Secure authentication with JWT-based access tokens.
+- JWT-based authentication and access tokens.
 - Multi-user support.
 - Disk-based file storage with PostgreSQL metadata.
 - Background cleanup jobs for expired transfers.
@@ -34,7 +42,8 @@ Cargo is a good fit for offices, classrooms, homes, labs, and any environment wh
 - Expiring transfer codes.
 - Metadata separated from file storage.
 - No cloud dependency.
-- Local network only by default.
+- No external cloud storage dependency.
+- Designed for local and privately routed networks.
 
 ## Tech Stack
 
@@ -69,7 +78,7 @@ Cargo follows a clean, layered structure:
 ### 1. Clone the repository
 
 ```bash
-git clone https:://github.com/LUFFE154/Cargo
+git clone https://github.com/LUFFE154/cargo
 cd Cargo
 ```
 
