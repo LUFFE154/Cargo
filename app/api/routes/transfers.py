@@ -9,7 +9,7 @@ from fastapi import Request, Response
 import segno
 
 from app.api.dependencies import get_current_user, get_settings, get_uow
-from app.api.schemas.transfers import TransferDownloadResponse, TransferUploadResponse, TransferListItemResponse
+from app.api.schemas.transfers import TransferDownloadResponse, TransferUploadResponse
 from app.application.exceptions import NotFoundError
 from app.application.transfer_codes import TransferCodeGenerator
 from app.application.transfers_service import TransferService
