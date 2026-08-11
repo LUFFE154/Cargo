@@ -27,7 +27,10 @@ def _layout(title: str, page: str, content: str) -> HTMLResponse:
     <link
         rel="stylesheet"
         href="/static/app.css"
+        rel="icon" type="image/png" href="/static/logo.png"
     />
+
+    
 </head>
 
 <body data-page="{page}">
