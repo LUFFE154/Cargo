@@ -14,6 +14,7 @@ Cargo is a good fit for offices, classrooms, homes, labs, and any environment wh
 
 - Fast file transfers over LAN.
 - Web-based upload and download flows.
+- Compatible with free services, such as Tailscale and Radmin
 - Short transfer codes for quick handoff between devices.
 - QR code output for easy scanning on a second device.
 - Secure authentication with JWT-based access tokens.
@@ -198,8 +199,8 @@ For example, you can use Cargo through:
 
 - Local Area Network (LAN) IP addresses
 - Port forwarding
-- Tailscale
-- Radmin VPN
+- **Tailscale**
+- **Radmin VPN**
 - Other VPN or virtual network interfaces
 - IPv6 addresses
 - Other network configurations capable of routing traffic to the host
