@@ -310,5 +310,5 @@ If you want to help, the best starting point is to open an issue or discussion d
 MIT License.
 
 ## Author
-Luiz Fernando Pio Ferreira
+Luiz Fernando
 luffe533@gmail.com
